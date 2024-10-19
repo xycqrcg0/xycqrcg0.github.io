@@ -1,0 +1,696 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="xy">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="平衡二叉树(AVL树)_哔哩哔哩_bilibili这里指的是二叉树。二叉树的特点在于查找数据的时候效率是O(log n)，和数组里的二分查找一样。但是它还可以解决数组中删除和插入是O(n)的问题。对于AVL树，满足|左子树深度-右子树深度|&lt;&#x3D;1。这样是为了防止树糟糕地退化成链表的形状，左右失衡，影响效率。在插入数据的时候，有左旋右旋的操作。以下是代码实现。 12345678910">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tree">
+<meta property="og:url" content="http://example.com/2024/10/19/tree/index.html">
+<meta property="og:site_name" content="welcome">
+<meta property="og:description" content="平衡二叉树(AVL树)_哔哩哔哩_bilibili这里指的是二叉树。二叉树的特点在于查找数据的时候效率是O(log n)，和数组里的二分查找一样。但是它还可以解决数组中删除和插入是O(n)的问题。对于AVL树，满足|左子树深度-右子树深度|&lt;&#x3D;1。这样是为了防止树糟糕地退化成链表的形状，左右失衡，影响效率。在插入数据的时候，有左旋右旋的操作。以下是代码实现。 12345678910">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-19T00:34:49.000Z">
+<meta property="article:modified_time" content="2024-10-19T00:41:06.754Z">
+<meta property="article:author" content="xy">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>tree - welcome</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"cblYhsv8WKP1erqez1kR3uA3-gzGzoHsz","app_key":"Dv1TmTgLXdZmtgLUMlwnNBnu","server_url":"https://cblyhsv8.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>xy&#39;s blog~</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="tree"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-10-19 08:34" pubdate>
+          2024年10月19日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">tree</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1tZ421q72h?spm_id_from=333.788.videopod.sections&vd_source=b7c43e8599d7b18c8d7a18d36ee79de0">平衡二叉树(AVL树)_哔哩哔哩_bilibili</a><br>这里指的是二叉树。<br>二叉树的特点在于查找数据的时候效率是O(log n)，和数组里的二分查找一样。但是它还可以解决数组中删除和插入是O(n)的问题。<br>对于AVL树，满足|左子树深度-右子树深度|&lt;&#x3D;1。<br>这样是为了防止树糟糕地退化成链表的形状，左右失衡，影响效率。<br>在插入数据的时候，有左旋右旋的操作。<br>以下是代码实现。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> &#123;</span><br>	<span class="hljs-type">int</span> value;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span>* <span class="hljs-title">left</span>;</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span>* <span class="hljs-title">right</span>;</span><br>	<span class="hljs-type">int</span> height; <span class="hljs-comment">//高度，用来计算平衡因子</span><br>	<span class="hljs-type">int</span> balfactor; <span class="hljs-comment">//平衡因子</span><br>&#125;node;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">max</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span> &#123; <span class="hljs-keyword">return</span>(a &gt; b ? a : b); &#125; <span class="hljs-comment">//比大小</span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">height</span><span class="hljs-params">(node* n)</span> &#123; <span class="hljs-comment">//返回每一个结点的高</span><br>	<span class="hljs-keyword">if</span> (n == <span class="hljs-literal">NULL</span>)	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">else</span>            <span class="hljs-keyword">return</span> n-&gt;height;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">upheightbal</span><span class="hljs-params">(node* n)</span> &#123; <span class="hljs-comment">//更新结点的高和平衡因子</span><br>	<span class="hljs-keyword">if</span> (n != <span class="hljs-literal">NULL</span>)<br>	&#123;<br>		n-&gt;height = max(height(n-&gt;left), height(n-&gt;right)) + <span class="hljs-number">1</span>;<br>		n-&gt;balfactor = height(n-&gt;left) - height(n-&gt;right);<br>	&#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">leftturn</span><span class="hljs-params">(node** n)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">rightturn</span><span class="hljs-params">(node** n)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">jugde</span><span class="hljs-params">(node** n)</span> &#123;<span class="hljs-comment">//判断失衡现象</span><br>	<span class="hljs-keyword">if</span> ((*n)-&gt;balfactor == <span class="hljs-number">2</span> &amp;&amp; (*n)-&gt;left-&gt;balfactor == <span class="hljs-number">1</span>)	rightturn(n);       <span class="hljs-comment">//LL型</span><br><br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((*n)-&gt;balfactor &gt; <span class="hljs-number">1</span> &amp;&amp; (*n)-&gt;left-&gt;balfactor == <span class="hljs-number">-1</span>)                  <span class="hljs-comment">//LR型</span><br>	&#123;<br>		leftturn(&amp;((*n)-&gt;left));<br>		rightturn(n);<br>	&#125;<br><br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((*n)-&gt;balfactor == <span class="hljs-number">-2</span> &amp;&amp; (*n)-&gt;right-&gt;balfactor == <span class="hljs-number">-1</span>)	leftturn(n);<span class="hljs-comment">//RR型</span><br><br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((*n)-&gt;balfactor &lt; <span class="hljs-number">-1</span> &amp;&amp; (*n)-&gt;right-&gt;balfactor == <span class="hljs-number">1</span>)                 <span class="hljs-comment">//RL型</span><br>	&#123;<br>		rightturn(&amp;((*n)-&gt;right));<br>		leftturn(n);<br>	&#125;<br>&#125;<br><br>node* <span class="hljs-title function_">insert</span><span class="hljs-params">(node* n, <span class="hljs-type">int</span> val)</span> &#123;  <span class="hljs-comment">//创建结点同时判断旋转情况（kimi指导使用递归即判断旋转）</span><br>	<span class="hljs-keyword">if</span> (n == <span class="hljs-literal">NULL</span>)<br>	&#123;<br>		node* newnode = (node*)<span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(node));<br>		newnode-&gt;value = val;<br>		newnode-&gt;left = newnode-&gt;right = <span class="hljs-literal">NULL</span>;<br>		newnode-&gt;height = newnode-&gt;balfactor = <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">return</span> newnode;<br>	&#125;<br>	<span class="hljs-keyword">if</span> (n-&gt;value &gt; val)	        n-&gt;left = insert(n-&gt;left, val);<br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (n-&gt;value &lt; val)	n-&gt;right = insert(n-&gt;right, val);<br>	<span class="hljs-keyword">else</span>                        <span class="hljs-keyword">return</span> n;<br><br>	upheightbal(n);<br>	jugde(&amp;n);<br>	upheightbal(n);<br>	<span class="hljs-keyword">return</span> n;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">leftturn</span><span class="hljs-params">(node** n)</span><span class="hljs-comment">//左旋</span><br>&#123;<br>	upheightbal(*n);<br>	node* temp1 = *n;<br>	node* temp2 = (*n)-&gt;right-&gt;left;<br>	*n = (*n)-&gt;right;<br>	(*n)-&gt;left = temp1;<br>	(*n)-&gt;left-&gt;right = temp2;<br>&#125;<br><span class="hljs-type">void</span> <span class="hljs-title function_">rightturn</span><span class="hljs-params">(node** n)</span><span class="hljs-comment">//右旋</span><br>&#123;<br>	node* temp1 = (*n);<br>	node* temp2 = (*n)-&gt;left-&gt;right;<br>	*n = (*n)-&gt;left;<br>	(*n)-&gt;right = temp1;<br>	(*n)-&gt;right-&gt;left = temp2;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">qianxu</span><span class="hljs-params">(node* n)</span><span class="hljs-comment">//前序读取</span><br>&#123;<br>	<span class="hljs-keyword">if</span> (n != <span class="hljs-literal">NULL</span>)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, n-&gt;value);<br>		qianxu(n-&gt;left);<br>		qianxu(n-&gt;right);<br>	&#125;<br>&#125;<br><span class="hljs-type">void</span> <span class="hljs-title function_">zhongxu</span><span class="hljs-params">(node* n)</span><span class="hljs-comment">//中序读取</span><br>&#123;<br>	<span class="hljs-keyword">if</span> (n != <span class="hljs-literal">NULL</span>)<br>	&#123;<br>		zhongxu(n-&gt;left);<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, n-&gt;value);<br>		zhongxu(n-&gt;right);<br>	&#125;<br>&#125;<br><span class="hljs-type">void</span> <span class="hljs-title function_">houxu</span><span class="hljs-params">(node* n)</span><span class="hljs-comment">//后序读取</span><br>&#123;<br>	<span class="hljs-keyword">if</span> (n != <span class="hljs-literal">NULL</span>)<br>	&#123;<br>		houxu(n-&gt;left);<br>		houxu(n-&gt;right);<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, n-&gt;value);<br>	&#125;<br>&#125;<br><span class="hljs-type">void</span> <span class="hljs-title function_">get</span><span class="hljs-params">(node** n, node* temp)</span> &#123;<span class="hljs-comment">//辅助删除函数的实现（递归）</span><br>	<span class="hljs-keyword">if</span> (*n != <span class="hljs-literal">NULL</span>)<br>	&#123;<br>		get(n, temp);<span class="hljs-comment">//递归</span><br>		upheightbal(*n);<span class="hljs-comment">//等到完成“嫁接”工作后要重新更新一下高度</span><br>		jugde(n);<span class="hljs-comment">//判断要不要旋转</span><br>		upheightbal(*n);<span class="hljs-comment">//旋转后还要更新高度，也确保之后父结点的高度更新正确</span><br>	&#125;<br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (*n == <span class="hljs-literal">NULL</span>) &#123;<br>		*n = temp;<br>	&#125;<br>&#125;<br><span class="hljs-type">void</span> <span class="hljs-title function_">Delete</span><span class="hljs-params">(node** n, <span class="hljs-type">int</span> data)</span><span class="hljs-comment">//删除结点的函数（非懒惰删除）</span><br>&#123;<br>	<span class="hljs-keyword">if</span> (*n == <span class="hljs-literal">NULL</span>)  <span class="hljs-keyword">return</span>;<br>	<span class="hljs-keyword">if</span> ((*n)-&gt;value &gt; data)	Delete(&amp;((*n)-&gt;left), data);<br>	<span class="hljs-keyword">if</span> ((*n)-&gt;value &lt; data)	Delete(&amp;((*n)-&gt;right), data);<span class="hljs-comment">//两个递归</span><br>	<span class="hljs-keyword">if</span> ((*n)-&gt;value == data) &#123;<br>		<span class="hljs-keyword">if</span> ((*n)-&gt;left == <span class="hljs-literal">NULL</span> &amp;&amp; (*n)-&gt;right == <span class="hljs-literal">NULL</span>) &#123;<span class="hljs-comment">//没有孩子的结点（树叶）</span><br>			<span class="hljs-built_in">free</span>(*n);<br>			*n = <span class="hljs-literal">NULL</span>;<br>		&#125;<br>		<span class="hljs-keyword">if</span> ((*n)-&gt;left == <span class="hljs-literal">NULL</span> &amp;&amp; (*n)-&gt;right != <span class="hljs-literal">NULL</span>) &#123;<span class="hljs-comment">//有右孩子的结点</span><br>			node* temp = *n;<br>			*n = (*n)-&gt;right;<br>			<span class="hljs-built_in">free</span>(temp);<br>		&#125;<br>		<span class="hljs-keyword">if</span> ((*n)-&gt;right == <span class="hljs-literal">NULL</span> &amp;&amp; (*n)-&gt;left != <span class="hljs-literal">NULL</span>) &#123;<span class="hljs-comment">//有左孩子的结点</span><br>			node* temp = *n;<br>			*n = (*n)-&gt;left;<br>			<span class="hljs-built_in">free</span>(temp);<br>		&#125;<br>		<span class="hljs-keyword">if</span> ((*n)-&gt;left != <span class="hljs-literal">NULL</span> &amp;&amp; (*n)-&gt;right != <span class="hljs-literal">NULL</span>) &#123;<span class="hljs-comment">//左右孩子都有</span><br>			node* temp = (*n)-&gt;left;<span class="hljs-comment">//先保存左支防失联</span><br>			node* temp2 = *n;<br>			*n = (*n)-&gt;right;<span class="hljs-comment">//用右孩子替换要删除的结点</span><br>			<span class="hljs-built_in">free</span>(temp2);<br>			get(n, temp);<span class="hljs-comment">//开始递归寻找存放左支的地方并记录路径</span><br>		&#125;<br>		upheightbal(*n);<span class="hljs-comment">//这是为前三种情况准备的</span><br>		jugde(n);<span class="hljs-comment">//删除之后，找到要删除结点的路径上的结点都要重新判别失衡现象</span><br>		upheightbal(*n);<span class="hljs-comment">//转完还要更新</span><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>以上代码完成了AVL树插入时旋转的平衡操作，以及附加了一般树的前中后序遍历。<br>比较重要的是其中对树遍历（包括查找和删除）时使用的递归操作（递归虽说效率不高，但对晕树来说是很好理解与实现的方式了）。<br>在insert操作中，传入的node* root，对于指针来说是值传递（唉），因此如果在函数中将形参指向新开辟的空间的话，root的指向是不会变。因此这里使用了返回指针的操作来对root进行重新赋值；<br>然后是node**这个东西，也和值传递有关，因为值传递无法改变实参，所以要地址传递，便有了这种写法，把指向node地址的指针的地址传送过去（<del>但是一直要写(*n)好烦啊！</del>），主要在turn和Delete函数中使用，因为它们要对树的结构进行修改。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>tree</div>
+      <div>http://example.com/2024/10/19/tree/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>xy</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年10月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/10/06/first/" title="first">
+                        <span class="hidden-mobile">first</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"cblYhsv8WKP1erqez1kR3uA3-gzGzoHsz","appKey":"Dv1TmTgLXdZmtgLUMlwnNBnu","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
