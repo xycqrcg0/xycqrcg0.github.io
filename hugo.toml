@@ -1,0 +1,24 @@
+baseURL = 'https://xycqrcg0.github.io'
+title = "Wumi's Blog"
+theme = ["github.com/D-Sketon/hugo-theme-reimu"]
+
+languageCode = 'zh-CN'
+defaultContentLanguage = 'zh-CN'
+[languages]
+[languages.zh-CN]
+languageName = '简体中文'
+weight = 1
+
+[markup.highlight]
+guessSyntax = true
+noClasses = false
+
+[outputs]
+home = ["Algolia", "HTML", "RSS"]
+
+[outputFormats.Algolia]
+baseName = "algolia"
+isPlainText = true
+mediaType = "application/json"
+notAlternative = true
+
