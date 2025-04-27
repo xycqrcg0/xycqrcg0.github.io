@@ -2,36 +2,45 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://xycqrcg0.github.io/tags/go/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2025-04-24T12:36:52+08:00</lastmod>
   </url><url>
-    <loc>https://xycqrcg0.github.io/tags/redis/</loc>
+    <loc>http://localhost:1313/tags/go/</loc>
     <lastmod>2025-04-24T12:36:52+08:00</lastmod>
   </url><url>
-    <loc>https://xycqrcg0.github.io/tags/</loc>
+    <loc>http://localhost:1313/tags/redis/</loc>
     <lastmod>2025-04-24T12:36:52+08:00</lastmod>
   </url><url>
-    <loc>https://xycqrcg0.github.io/post/go-redis/</loc>
+    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2025-04-24T12:36:52+08:00</lastmod>
   </url><url>
-    <loc>https://xycqrcg0.github.io/</loc>
+    <loc>http://localhost:1313/post/go-redis/</loc>
     <lastmod>2025-04-24T12:36:52+08:00</lastmod>
   </url><url>
-    <loc>https://xycqrcg0.github.io/tags/%E7%BD%91%E7%AB%99/</loc>
+    <loc>http://localhost:1313/tags/%E7%BD%91%E7%AB%99/</loc>
     <lastmod>2025-04-13T14:17:37+08:00</lastmod>
   </url><url>
-    <loc>https://xycqrcg0.github.io/post/website/</loc>
+    <loc>http://localhost:1313/post/website/</loc>
     <lastmod>2025-04-13T14:17:37+08:00</lastmod>
   </url><url>
-    <loc>https://xycqrcg0.github.io/about/</loc>
+    <loc>http://localhost:1313/about/</loc>
     <lastmod>2025-04-04T14:08:21+08:00</lastmod>
   </url><url>
-    <loc>https://xycqrcg0.github.io/friend/</loc>
+    <loc>http://localhost:1313/friend/</loc>
     <lastmod>2025-04-04T13:50:06+08:00</lastmod>
   </url><url>
-    <loc>https://xycqrcg0.github.io/archives/</loc>
+    <loc>http://localhost:1313/post/hello/</loc>
+    <lastmod>2025-04-04T11:02:09+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/test/</loc>
+    <lastmod>2025-04-03T14:09:31+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/archives/</loc>
     <lastmod>2022-07-26T21:46:25+08:00</lastmod>
   </url><url>
-    <loc>https://xycqrcg0.github.io/categories/</loc>
+    <loc>http://localhost:1313/post/</loc>
+    <lastmod>2022-07-26T21:46:25+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/</loc>
   </url>
 </urlset>

@@ -1,4 +1,130 @@
-(()=>{var y=(s,n)=>()=>(n||s((n={exports:{}}).exports,n),n.exports);var p=y(h=>{window.throttle=(s,n)=>{let l,i;return(...a)=>{let e=h;!i||Date.now()-i>=n?(s.apply(e,a),i=Date.now()):(clearTimeout(l),l=setTimeout(()=>{s.apply(e,a),i=Date.now()},n-(Date.now()-i)))}};(function(){[Element,Document,Window].forEach(e=>{e.prototype._addEventListener=e.prototype.addEventListener,e.prototype._removeEventListener=e.prototype.removeEventListener,e.prototype.addEventListener=e.prototype.on=function(r,t,o){this.__listeners__=this.__listeners__||{},this.__listeners__[r]=this.__listeners__[r]||[];for(let[m,d]of this.__listeners__[r])if(m===t&&JSON.stringify(d)===JSON.stringify(o))return this;return this.__listeners__[r].push([t,o]),this._addEventListener(r,t,o),this},e.prototype.removeEventListener=e.prototype.off=function(r,t,o){return!this.__listeners__||!this.__listeners__[r]?this:t?(this._removeEventListener(r,t,o),this.__listeners__[r]=this.__listeners__[r].filter(([m,d])=>m!==t||JSON.stringify(d)!==JSON.stringify(o)),this.__listeners__[r].length===0&&delete this.__listeners__[r],this):(this.__listeners__[r].forEach(([m,d])=>{this.removeEventListener(r,m,d)}),delete this.__listeners__[r],this)}}),window._$=e=>document.querySelector(e),window._$$=e=>document.querySelectorAll(e);let s=document.createElement("a");s.className="nav-icon dark-mode-btn",_$("#sub-nav").append(s);let n=window.matchMedia("(prefers-color-scheme: dark)").matches;function l(e){let t=e==="true"||e==="auto"&&n;document.documentElement.setAttribute("data-theme",t?"dark":null),localStorage.setItem("dark_mode",e),s.id=`nav-${e==="true"?"moon":e==="false"?"sun":"circle-half-stroke"}-btn`,document.body.dispatchEvent(new CustomEvent(`${t?"dark":"light"}-theme-set`))}let i=localStorage.getItem("dark_mode")||document.documentElement.getAttribute("data-theme-mode")||"auto";l(i),s.addEventListener("click",throttle(()=>{let e=["auto","false","true"],r=e[(e.indexOf(localStorage.getItem("dark_mode"))+1)%3];l(r)},1e3));let a=0;if(document.addEventListener("scroll",()=>{let e=document.documentElement.scrollTop||document.body.scrollTop,r=e-a;window.diffY=r,a=e,r<0?_$("#header-nav")?.classList.remove("header-nav-hidden"):_$("#header-nav")?.classList.add("header-nav-hidden")}),window.Pace&&Pace.on("done",()=>{Pace.sources[0].elements=[]}),window.materialTheme){let e=new materialTheme.ColorThemeExtractor({needTransition:!1});async function r(t){let o=await e.generateThemeSchemeFromImage(t);if(document.documentElement.style.setProperty("--md-sys-color-primary-light",e.hexFromArgb(o.schemes.light.props.primary)),document.documentElement.style.setProperty("--md-sys-color-primary-dark",e.hexFromArgb(o.schemes.dark.props.primary)),_$("#reimu-generated-theme-style"))return;let d=`
+(() => {
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __commonJS = (cb, mod) => function __require() {
+    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  };
+
+  // <stdin>
+  var require_stdin = __commonJS({
+    "<stdin>"(exports) {
+      window.throttle = (func, limit) => {
+        let lastFunc, lastRan;
+        return (...args) => {
+          const context = exports;
+          if (!lastRan || Date.now() - lastRan >= limit) {
+            func.apply(context, args);
+            lastRan = Date.now();
+          } else {
+            clearTimeout(lastFunc);
+            lastFunc = setTimeout(
+              () => {
+                func.apply(context, args);
+                lastRan = Date.now();
+              },
+              limit - (Date.now() - lastRan)
+            );
+          }
+        };
+      };
+      (function() {
+        [Element, Document, Window].forEach((target) => {
+          target.prototype._addEventListener = target.prototype.addEventListener;
+          target.prototype._removeEventListener = target.prototype.removeEventListener;
+          target.prototype.addEventListener = target.prototype.on = function(name, listener, options) {
+            this.__listeners__ = this.__listeners__ || {};
+            this.__listeners__[name] = this.__listeners__[name] || [];
+            for (let [l, o] of this.__listeners__[name]) {
+              if (l === listener && JSON.stringify(o) === JSON.stringify(options)) {
+                return this;
+              }
+            }
+            this.__listeners__[name].push([listener, options]);
+            this._addEventListener(name, listener, options);
+            return this;
+          };
+          target.prototype.removeEventListener = target.prototype.off = function(name, listener, options) {
+            if (!this.__listeners__ || !this.__listeners__[name]) {
+              return this;
+            }
+            if (!listener) {
+              this.__listeners__[name].forEach(([listener2, options2]) => {
+                this.removeEventListener(name, listener2, options2);
+              });
+              delete this.__listeners__[name];
+              return this;
+            }
+            this._removeEventListener(name, listener, options);
+            this.__listeners__[name] = this.__listeners__[name].filter(
+              ([l, o]) => l !== listener || JSON.stringify(o) !== JSON.stringify(options)
+            );
+            if (this.__listeners__[name].length === 0) {
+              delete this.__listeners__[name];
+            }
+            return this;
+          };
+        });
+        window._$ = (selector) => document.querySelector(selector);
+        window._$$ = (selector) => document.querySelectorAll(selector);
+        const themeButton = document.createElement("a");
+        themeButton.className = "nav-icon dark-mode-btn";
+        _$("#sub-nav").append(themeButton);
+        const osMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        function setTheme(config) {
+          const isAuto = config === "auto";
+          const isDark = config === "true" || isAuto && osMode;
+          document.documentElement.setAttribute("data-theme", isDark ? "dark" : null);
+          localStorage.setItem("dark_mode", config);
+          themeButton.id = `nav-${config === "true" ? "moon" : config === "false" ? "sun" : "circle-half-stroke"}-btn`;
+          document.body.dispatchEvent(
+            new CustomEvent(`${isDark ? "dark" : "light"}-theme-set`)
+          );
+        }
+        const savedMode = localStorage.getItem("dark_mode") || document.documentElement.getAttribute("data-theme-mode") || "auto";
+        setTheme(savedMode);
+        themeButton.addEventListener(
+          "click",
+          throttle(() => {
+            const modes = ["auto", "false", "true"];
+            const nextMode = modes[(modes.indexOf(localStorage.getItem("dark_mode")) + 1) % 3];
+            setTheme(nextMode);
+          }, 1e3)
+        );
+        let oldScrollTop = 0;
+        document.addEventListener("scroll", () => {
+          let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+          const diffY = scrollTop - oldScrollTop;
+          window.diffY = diffY;
+          oldScrollTop = scrollTop;
+          if (diffY < 0) {
+            _$("#header-nav")?.classList.remove("header-nav-hidden");
+          } else {
+            _$("#header-nav")?.classList.add("header-nav-hidden");
+          }
+        });
+        if (window.Pace) {
+          Pace.on("done", () => {
+            Pace.sources[0].elements = [];
+          });
+        }
+        if (window.materialTheme) {
+          const extractor = new materialTheme.ColorThemeExtractor({
+            needTransition: false
+          });
+          async function generateScheme(imageFile) {
+            const scheme = await extractor.generateThemeSchemeFromImage(imageFile);
+            document.documentElement.style.setProperty(
+              "--md-sys-color-primary-light",
+              extractor.hexFromArgb(scheme.schemes.light.props.primary)
+            );
+            document.documentElement.style.setProperty(
+              "--md-sys-color-primary-dark",
+              extractor.hexFromArgb(scheme.schemes.dark.props.primary)
+            );
+            const existingStyle = _$("#reimu-generated-theme-style");
+            if (existingStyle) {
+              return;
+            }
+            const css = `
     :root {
       --red-0: var(--md-sys-color-primary-light);
       --red-1: color-mix(in srgb, var(--md-sys-color-primary-light) 90%, white);
@@ -29,4 +155,65 @@
       
       --color-border: var(--red-5);
     }
-    `,c=document.createElement("style");c.id="reimu-generated-theme-style",c.textContent=d,document.body.appendChild(c)}window.generateSchemeHandler=()=>{if(window.bannerElement?.src)window.bannerElement.complete?r(bannerElement):window.bannerElement.addEventListener("load",()=>{r(bannerElement)},{once:!0});else if(window.bannerElement?.style.background){let t=window.bannerElement.style.background.match(/\d+/g),o=e.generateThemeScheme({r:parseInt(t[0]),g:parseInt(t[1]),b:parseInt(t[2])});document.documentElement.style.setProperty("--md-sys-color-primary-light",e.hexFromArgb(o.schemes.light.props.primary)),document.documentElement.style.setProperty("--md-sys-color-primary-dark",e.hexFromArgb(o.schemes.dark.props.primary))}}}})();window.safeImport=async(s,n)=>{if(!n)return import(s);let i=await(await fetch(s)).text(),a=await crypto.subtle.digest("SHA-384",new TextEncoder().encode(i));if("sha384-"+btoa(String.fromCharCode(...new Uint8Array(a)))!==n)throw new Error(`Integrity check failed for ${s}`);let r=new Blob([i],{type:"application/javascript"}),t=URL.createObjectURL(r),o=await import(t);return URL.revokeObjectURL(t),o}});p();})();
+    `;
+            const style = document.createElement("style");
+            style.id = "reimu-generated-theme-style";
+            style.textContent = css;
+            document.body.appendChild(style);
+          }
+          window.generateSchemeHandler = () => {
+            if (window.bannerElement?.src) {
+              if (window.bannerElement.complete) {
+                generateScheme(bannerElement);
+              } else {
+                window.bannerElement.addEventListener(
+                  "load",
+                  () => {
+                    generateScheme(bannerElement);
+                  },
+                  { once: true }
+                );
+              }
+            } else if (window.bannerElement?.style.background) {
+              const rgba = window.bannerElement.style.background.match(/\d+/g);
+              const scheme = extractor.generateThemeScheme({
+                r: parseInt(rgba[0]),
+                g: parseInt(rgba[1]),
+                b: parseInt(rgba[2])
+              });
+              document.documentElement.style.setProperty(
+                "--md-sys-color-primary-light",
+                extractor.hexFromArgb(scheme.schemes.light.props.primary)
+              );
+              document.documentElement.style.setProperty(
+                "--md-sys-color-primary-dark",
+                extractor.hexFromArgb(scheme.schemes.dark.props.primary)
+              );
+            }
+          };
+        }
+      })();
+      window.safeImport = async (url, integrity) => {
+        if (!integrity) {
+          return import(url);
+        }
+        const response = await fetch(url);
+        const moduleContent = await response.text();
+        const actualHash = await crypto.subtle.digest(
+          "SHA-384",
+          new TextEncoder().encode(moduleContent)
+        );
+        const hashBase64 = "sha384-" + btoa(String.fromCharCode(...new Uint8Array(actualHash)));
+        if (hashBase64 !== integrity) {
+          throw new Error(`Integrity check failed for ${url}`);
+        }
+        const blob = new Blob([moduleContent], { type: "application/javascript" });
+        const blobUrl = URL.createObjectURL(blob);
+        const module2 = await import(blobUrl);
+        URL.revokeObjectURL(blobUrl);
+        return module2;
+      };
+    }
+  });
+  require_stdin();
+})();

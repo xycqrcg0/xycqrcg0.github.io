@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on 泥嚎</title>
-    <link>https://xycqrcg0.github.io/tags/</link>
-    <description>Recent content in Tags on 泥嚎</description>
+    <title>Tags on ~Wumi~</title>
+    <link>http://localhost:1313/tags/</link>
+    <description>Recent content in Tags on ~Wumi~</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 24 Apr 2025 12:36:52 +0800</lastBuildDate>
-    <atom:link href="https://xycqrcg0.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go</title>
-      <link>https://xycqrcg0.github.io/tags/go/</link>
+      <link>http://localhost:1313/tags/go/</link>
       <pubDate>Thu, 24 Apr 2025 12:36:52 +0800</pubDate>
-      <guid>https://xycqrcg0.github.io/tags/go/</guid>
+      <guid>http://localhost:1313/tags/go/</guid>
       <description></description>
     </item>
     <item>
       <title>Redis</title>
-      <link>https://xycqrcg0.github.io/tags/redis/</link>
+      <link>http://localhost:1313/tags/redis/</link>
       <pubDate>Thu, 24 Apr 2025 12:36:52 +0800</pubDate>
-      <guid>https://xycqrcg0.github.io/tags/redis/</guid>
+      <guid>http://localhost:1313/tags/redis/</guid>
       <description></description>
     </item>
     <item>
       <title>网站</title>
-      <link>https://xycqrcg0.github.io/tags/%E7%BD%91%E7%AB%99/</link>
+      <link>http://localhost:1313/tags/%E7%BD%91%E7%AB%99/</link>
       <pubDate>Sun, 13 Apr 2025 14:17:37 +0800</pubDate>
-      <guid>https://xycqrcg0.github.io/tags/%E7%BD%91%E7%AB%99/</guid>
+      <guid>http://localhost:1313/tags/%E7%BD%91%E7%AB%99/</guid>
       <description></description>
     </item>
   </channel>
